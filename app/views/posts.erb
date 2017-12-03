@@ -1,0 +1,35 @@
+<html>
+  <head>
+  </head>
+  <body>
+
+    <%if current_user %>
+      <h1>My profile</h1>
+        <p> Username: <%= current_user.username %></p>
+        <p> Email: <%= current_user.email %> </p>
+        <p>Number of posts <%= current_user.posts.count %></p>
+
+
+      <form action='/posts' method="post">
+          <input type='text' name='new_post' placeholder="Your new post...">
+        <input type='submit' value='Post'>
+      </form>
+    <%end%>
+
+  <h1>All posts</h1>
+
+    <% @posts.reverse.each do |post| %>
+      <table id="all-posts" class="redTable">
+        <thead>
+          <tr><th><%= post.maker %></th></tr>
+        </thead>
+          <tbody>
+            <tr><td><%= post.body %></td></tr>
+            <tr><td>Sent on: <%= post.created_at.strftime('%c') %></td></tr>
+          </tbody>
+        </tr>
+      </table>
+    <%end%>
+
+  </body>
+</html>
