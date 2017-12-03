@@ -1,6 +1,7 @@
 require 'data_mapper'
 require 'dm-postgres-adapter'
 
+require_relative 'models/comment'
 require_relative 'models/post'
 require_relative 'models/user'
 

@@ -6,8 +6,6 @@ class Post
   property :body, Text
   property :created_at, DateTime
 
-  has n,   :tags
-
   belongs_to :user
-  belongs_to :interest, :required => false
+  belongs_to :post
 end
