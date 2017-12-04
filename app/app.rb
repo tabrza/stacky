@@ -23,12 +23,11 @@ class Stack < Sinatra::Base
 
   post '/' do
     user = User.authenticate(params[:email], params[:password])
-    session[:user_id] = user.id
     if user
       session[:user_id] = user.id
       redirect '/posts'
     else
-      flash.now[:errors] = ['The email or password is incorrect']
+      flash[:notice] = "Incorrect email or password"
       redirect '/'
     end
   end
