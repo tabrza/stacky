@@ -9,6 +9,7 @@ class Stack < Sinatra::Base
   enable :sessions
   set :session_secret, 'super secret'
   register Sinatra::Flash
+  use Rack::MethodOverride
 
   helpers do
     def current_user
@@ -22,12 +23,19 @@ class Stack < Sinatra::Base
 
   post '/' do
     user = User.authenticate(params[:email], params[:password])
+    session[:user_id] = user.id
     if user
       session[:user_id] = user.id
+      redirect '/posts'
     else
       flash.now[:errors] = ['The email or password is incorrect']
+      redirect '/'
     end
-    redirect '/'
+  end
+
+  delete '/user' do
+    session[:user_id] = nil
+    redirect to '/'
   end
 
   get '/posts' do
@@ -52,6 +60,7 @@ class Stack < Sinatra::Base
                     username: params[:username],
                     password: params[:password],
                     password_confirmation: params[:password_confirmation])
+    session[:user_id] = user.id
     if user.id.nil?
       flash.now[:notice] = user.errors
       erb(:signup)
