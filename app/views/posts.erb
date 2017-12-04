@@ -16,6 +16,14 @@
       </form>
     <%end%>
 
+    <% if session[:user_id] %>
+      <form method='post' action='/user'>
+        <input type='hidden' name='_method' value='delete'>
+        <input class='button' type='submit' value='Sign out'>
+      </form>
+
+    <% end %>
+
   <h1>All posts</h1>
 
     <% @posts.reverse.each do |post| %>
