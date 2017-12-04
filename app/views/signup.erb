@@ -1,11 +1,13 @@
 <% if flash[:notice] %>
-  <div id='notice'><%= flash[:notice] %></div>
+   <%flash[:notice].each do |flash|%>
+    <div id='notice'><%= flash %></div>
+  <% end %>
 <% end %>
 <!DOCTYPE html>
 <html >
   <head>
     <meta charset="UTF-8">
-    <title> sign up form</title>
+    <title>Sign up form</title>
     <link rel="stylesheet" href="css/style.css">
   </head>
 
