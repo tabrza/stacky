@@ -47,17 +47,17 @@ class Stack < Sinatra::Base
   end
 
   post '/signup' do
-    user = User.new(name: params[:name],
-                       email: params[:email],
-                       username: params[:username],
-                       password: params[:password],
-                       password_confirmation: params[:password_confirmation])
-    if user.save
+    user = User.create(name: params[:name],
+                    email: params[:email],
+                    username: params[:username],
+                    password: params[:password],
+                    password_confirmation: params[:password_confirmation])
+    if user.id.nil?
+      flash.now[:notice] = user.errors
+      erb(:signup)
+    else
       session[:user_id] = user.id
       redirect '/posts'
-    else
-      flash.now[:notice] = "Password and confirmation password do not match"
-      erb(:signup)
     end
   end
 
